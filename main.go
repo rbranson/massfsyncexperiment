@@ -29,10 +29,11 @@ func syncWithGoroutines(files []*os.File) {
 func syncWithGoroutinePool(files []*os.File, cnt int) {
 	wg := sync.WaitGroup{}
 	for i := 0; i < cnt; i++ {
+		t := i
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			for x := i; x < len(files); x += cnt {
+			for x := t; x < len(files); x += cnt {
 				files[x].Sync()
 			}
 		}()
